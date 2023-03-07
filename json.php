@@ -3,11 +3,12 @@ require_once 'functions.php';
 
 header('Content-Type:application/json;charset=utf-8');
 
+$path = random_image();
 $str = array(
   'response' => array(
     array(
-      'path' => random_image(),
-      'url' => 'https://' . $_SERVER['HTTP_HOST'] . '/' . random_image(),
+      'path' => $path,
+      'url' => 'https://' . $_SERVER['HTTP_HOST'] . '/' . $path,
     )
   )
 );
