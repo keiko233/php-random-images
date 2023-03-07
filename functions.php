@@ -13,10 +13,6 @@ class Images {
   function getPath($array) {
     return $array[array_rand($array)];
   }
-
-  function getContent($path) {
-    return file_get_contents($path);
-  }
 }
 
 function random_image() {
