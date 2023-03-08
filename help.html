@@ -12,14 +12,12 @@
       padding: 0;
       margin: 0;
     }
-
     body {
       background-image: url(https://pic.majokeiko.com);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     }
-
     div#app {
       height: 46vh;
       max-width: 568px;
@@ -33,19 +31,16 @@
       border-radius: 24px;
       backdrop-filter: blur(10px);
     }
-
     div#app h3 {
       font-size: 2rem;
       margin: 1vh 0;
     }
-
     div#app .item {
       padding: 10px;
       background-color: #ffffff4d;
       margin-top: 10px;
       border-radius: 6px;
     }
-
     div#app .item code {
       padding: 2px 4px;
       border-radius: 3px;
@@ -55,18 +50,14 @@
 </head>
 
 <body>
-
   <div id="app">
     <h3>使用帮助</h3>
-
     <div class="item" v-for="(content, i) in contents" :key="i">
       <p>{{ content.title }} <code>{{ content.code }}/</code></p>
     </div>
   </div>
-
   <script>
     const { createApp } = Vue
-
     createApp({
       data() {
         return {
@@ -86,13 +77,16 @@
             {
               title: '获取指定路径',
               code: window.location.origin + '/?p=example'
+            },
+            {
+              title: 'GitHub',
+              code: 'https://github.com/keiko233/php-random-images'
             }
           ]
         }
       }
     }).mount('#app')
   </script>
-
 </body>
 
 </html>
