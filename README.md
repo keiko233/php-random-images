@@ -12,4 +12,6 @@ Import your images on `images` folder.
 
 `https://your.domain.com/?m=json` get json response.
 
+`https://your.domain.com/?m=base64` get base64 image json response.
+
 `https://your.domain.com/?p=example` get specified path image.
