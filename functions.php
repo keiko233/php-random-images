@@ -68,3 +68,4 @@ function getUserParameter() {
     return 'images/';
   }
 }
+?>
