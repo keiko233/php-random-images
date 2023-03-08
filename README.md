@@ -8,6 +8,6 @@ Import your images on `images` folder.
 
 `https://your.domain.com/` to get images.
 
-`https://your.domain.com/json.php` to get json response.
+`https://your.domain.com/?m=json` to get json response.
 
-`https://your.domain.com/path.php` to get image path.
+`https://your.domain.com/?m=path` to get image path.
