@@ -15,15 +15,15 @@ class Images {
   }
 }
 
-function random_image() {
-  $api = new Images('images/');
+function random_image($path) {
+  $api = new Images($path);
   return $api->getPath($api->getArray());
 }
 
-function echoJson() {
+function echoJson($_path) {
   header('Content-Type:application/json;charset=utf-8');
 
-  $path = random_image();
+  $path = random_image($_path);
   $str = array(
     'response' => array(
       array(
@@ -34,5 +34,13 @@ function echoJson() {
   );
 
   echo json_encode($str, JSON_UNESCAPED_SLASHES) . PHP_EOL;
+}
+
+function getUserParameter() {
+  if ($_GET['p'] != null)  {
+    return $_GET['p'] . '/';
+  } else {
+    return 'images/';
+  }
 }
 ?>
