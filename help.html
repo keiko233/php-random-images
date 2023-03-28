@@ -13,15 +13,15 @@
       margin: 0;
     }
     body {
-      background-image: url(https://pic.majokeiko.com);
+      background-image: var(--image);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
     }
     div#app {
-      height: 46vh;
+      height: 80vh;
       max-width: 568px;
-      margin: 25vh auto;
+      margin: 8vh auto;
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
@@ -38,13 +38,46 @@
     div#app .item {
       padding: 10px;
       background-color: #ffffff4d;
-      margin-top: 10px;
-      border-radius: 6px;
+      margin-top: 8px;
+      border-radius: 10px;
     }
-    div#app .item code {
+    div#app code {
       padding: 2px 4px;
-      border-radius: 3px;
+      border-radius: 6px;
       background-color: #ffffffba;
+    }
+    div#app .image-preview {
+      background-image: var(--image);
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 100%;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px solid #fefefe;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-direction: column;
+    }
+    div#app .image-preview button {
+      padding: 6px 18px;
+      margin: 0 10px 10px 0;
+      border-radius: 32px;
+      border: 2px solid #ffa4a48c;
+      background-color: #ff4e62;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    div#app .image-preview button:hover {
+      background-color: #e2001a;
+    }
+    div#app .image-preview .info {
+      width: 95%;
+      margin: 10px;
     }
   </style>
 </head>
@@ -55,6 +88,15 @@
     <div class="item" v-for="(content, i) in contents" :key="i">
       <p>{{ content.title }} <code>{{ content.code }}/</code></p>
     </div>
+    <div class="image-preview">
+      <div class="info">image url: <code>{{ data.url }}</code></div>
+      <div>
+        <button type="button" @click="refresh">换一张</button>
+        <a :href="data.url" download>
+          <button>保存</button>
+        </a>
+      </div>
+    </div>
   </div>
   <script>
     const { createApp } = Vue
@@ -62,28 +104,38 @@
       data() {
         return {
           contents: [
-            {
-              title: '直接获取图片',
-              code: window.location.origin
-            },
-            {
-              title: '获取Json response',
-              code: window.location.origin + '/?m=json'
-            },
-            {
-              title: '获取base64处理后的 Json response',
-              code: window.location.origin + '/?m=base'
-            },
-            {
-              title: '获取指定路径',
-              code: window.location.origin + '/?p=example'
-            },
-            {
-              title: 'GitHub',
-              code: 'https://github.com/keiko233/php-random-images'
-            }
-          ]
+            { title: '直接获取图片', code: window.location.origin },
+            { title: '获取Json response', code: window.location.origin + '/?m=json' },
+            { title: '获取base64处理后的 Json response', code: window.location.origin + '/?m=base' },
+            { title: '获取指定路径', code: window.location.origin + '/?p=example' },
+            { title: 'GitHub', code: 'https://github.com/keiko233/php-random-images' }
+          ],
+          data: { url: null, }
         }
+      },
+      methods: {
+        insertImage(url) {
+          const insertImage = document.createElement('style');
+          insertImage.id = 'image';
+          insertImage.innerHTML = `:root{--image: url(${url});}`;
+          document.head.appendChild(insertImage);
+        },
+        refresh() {
+          this.data.url = 'requesting...';
+          document.head.removeChild(document.getElementById('image'));
+          this.getImage();
+        },
+        getImage() {
+          fetch(this.contents[1].code)
+            .then((res) => res.json())
+            .then((res) => {
+              this.data.url = res.response[0].url;
+              this.insertImage(this.data.url);
+          })
+        }
+      },
+      mounted() {
+        this.getImage();
       }
     }).mount('#app')
   </script>
