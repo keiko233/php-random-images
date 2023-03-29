@@ -118,7 +118,7 @@
         insertImage(url) {
           const insertImage = document.createElement('style');
           insertImage.id = 'image';
-          insertImage.innerHTML = `:root{--image: url(${url});}`;
+          insertImage.innerHTML = `:root{--image: url('${url})';}`;
           document.head.appendChild(insertImage);
         },
         refresh() {
