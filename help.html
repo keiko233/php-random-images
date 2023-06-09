@@ -91,11 +91,13 @@
     <div class="image-preview">
       <div class="info">image url: <code>{{ data.url }}</code></div>
       <div>
-        <button type="button" v-for="list in path" @click="selsctPath(list.path)">{{ list.name }}</button>
-        <button type="button" @click="refresh">换一张</button>
-        <a :href="data.url" download>
-          <button>保存</button>
-        </a>
+        <div><button type="button" v-for="list in path" @click="selsctPath(list.path)">{{ list.name }}</button></div>
+        <div style="float: right;">
+          <button type="button" @click="refresh">换一张</button>
+          <a :href="data.url" download>
+            <button>保存</button>
+          </a>
+        </div>
       </div>
     </div>
   </div>
