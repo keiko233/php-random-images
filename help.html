@@ -92,6 +92,7 @@
     <div class="image-preview">
       <div class="info">image url: <code>{{ data.url }}</code></div>
       <div>
+        <button type="button" v-for="list in path" @click="selsctPath(list.path)">{{ list.name }}</button>
         <button type="button" @click="refresh">换一张</button>
         <a :href="data.url" download>
           <button>保存</button>
@@ -111,7 +112,9 @@
             { title: '获取指定路径', code: window.location.origin + '/?p=example' },
             { title: 'GitHub', code: 'https://github.com/keiko233/php-random-images' }
           ],
-          data: { url: null, }
+          data: { url: null, },
+          path: [],
+          selscted: 'images'
         }
       },
       methods: {
@@ -127,16 +130,27 @@
           this.getImage();
         },
         getImage() {
-          fetch(this.contents[1].code)
+          fetch(this.contents[1].code + '&p=' + this.selscted)
             .then((res) => res.json())
             .then((res) => {
               this.data.url = res.response[0].url;
               this.insertImage(this.data.url);
           })
+        },
+        getPathLists() {
+          fetch('/path.json')
+            .then((res) => res.json())
+            .then((res) => this.path = res)
+        },
+        selsctPath(path) {
+          console.log(path);
+          this.selscted = path;
+          this.getImage();
         }
       },
       mounted() {
         this.getImage();
+        this.getPathLists();
       }
     }).mount('#app')
   </script>
